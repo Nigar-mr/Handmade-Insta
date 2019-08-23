@@ -1,0 +1,383 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="theshots is a directory listing template.">
+    <meta name="keywords" content="">
+
+    <title>Insta Tech</title>
+
+    <!-- Styles -->
+    <link href="{% static '/css/app.min.css' %}" rel="stylesheet">
+    <link href="{% static '/css/custom.css' %}" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700'
+          rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+    <link rel="icon" href="{% static '/img/favicon.ico' %}">
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="sticky-nav">
+
+<!-- Navigation bar -->
+<nav class="navbar">
+    <div class="container">
+
+        <!-- Logo and navigation links -->
+        <div class="pull-left">
+            <a class="navbar-toggle" href="#" data-toggle="offcanvas"><i class="ti-menu"></i></a>
+
+            <div class="logo">
+                <a href="{% url 'home' %}"><img src="{{ unique.logo.url }}" alt="logo"></a>
+            </div>
+
+            <ul class="nav-menu">
+                {% for menu in menu %}
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a class="active" href="{{ menu.url }}">{{ menu.name }}</a>
+                        {% else %}
+                            <a class="active" href="#login">{{ menu.name }}</a>
+                        {% endif %}
+                        {% if menu.rowmenu_set.last %}
+                            <ul>
+                                {% for row in menu.rowmenu_set.all %}
+                                    <li><a class="active" href="{{ row.url }}">{{ row.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- END Logo and navigation links -->
+
+        {% if user.is_authenticated %}
+            <!-- User account and action buttons -->
+            <div class="pull-right">
+                <a class="btn-navbar search-opener" href="#"><i class="ti-search"></i></a>
+                <a class="btn-navbar" href="{% url 'add' %}"><i class="ti-plus"></i></a>
+
+                <div class="dropdown user-account">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <img href=" %}" src="{{ request.user.get_image }}" alt="avatar">
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="{% url 'profile' request.user.id %}">Profile</a></li>
+                        <li><a href="{% url 'profile-settings' %}">Settings</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- END User account and action buttons -->
+        {% endif %}
+        <!-- Search screen -->
+        <div class="search-screen closed">
+            <button class="search-closer"><i class="ti-close"></i></button>
+            <form class="search-form" action="http://thetheme.io/theshots/page-search.html">
+                <input type="text" autocomplete="off" placeholder="Type to search...">
+            </form>
+        </div>
+        <!-- END Search screen -->
+    </div>
+    <div id="snackbar">Some text some message..</div>
+
+</nav>
+
+<!-- END Navigation bar -->
+
+{% block settings %}
+    <main>
+
+    <!-- Page links -->
+    <div class="page-links">
+        <div class="container">
+            <div class="pull-left">
+                <ul class="link-list">
+                    <li><a class="active" href="{% url 'profile-settings' %}">Profile</a></li>
+                    <li><a href="{% url 'social-settings' %}">Social medias</a></li>
+                    <li><a href="setting-security.html">Security</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END Page links -->
+{% endblock %}
+
+{% block page %}
+{% endblock %}
+
+
+
+<!-- Site footer -->
+<footer class="site-footer no-margin-top">
+
+    <!-- Top section -->
+    <div class="container">
+        <div class="row">
+            {% if forloop.counter == 2 or forloop.counter == 3 %}
+                {% for footer in footer %}
+
+                    <div class="col-xs-12 col-sm-4 col-md-2">
+                        <h6>{{ footer.name }}</h6>
+                        <ul class="footer-links">
+                            {% for footer_rows in footer.rowmenu_set.all %}
+                                <li><a href="{{ footer_rows.url }}">{{ footer_rows.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+
+
+            {% else %}
+                {% for footer in footer %}
+
+                    <div class="col-sm-12 col-md-5">
+                        <h6>{{ footer.name }}</h6>
+                        <p class="text-justify">{{ footer.story|safe }}</p>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+            <div class="col-xs-12 col-sm-4 col-md-3">
+
+                <input type="text" class="form-control" placeholder="Enter your email address">
+                <button class="btn btn-primary btn-sm btn-block" type="button"><i class="fa fa-paper-plane"></i>
+                    Subscribe
+                </button>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <!-- END Top section -->
+
+    <!-- Bottom section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">{{ unique.copyright|safe }}</p>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                    {% for icons in footer_icons %}
+                        <li><a class="{{ icons.icons }}" href="{{ icons.url }}"><i class="fa fa-{{ icons.icons }}"></i></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END Bottom section -->
+
+</footer>
+<!-- END Site footer -->
+
+
+<!-- Back to top button -->
+<a id="scroll-up" href="#"><i class="ti-angle-up"></i></a>
+<!-- END Back to top button -->
+
+<!-- Shot description modal -->
+<div id="shot-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <a class="close-modal" data-dismiss="modal" href="#"><i class="ti-close"></i></a>
+        <div class="modal-content"></div>
+    </div>
+</div>
+<!-- END Shot description modal -->
+
+{#{% block js %}#}
+{#{% endblock %}#}
+
+{% block cdn_js %}
+    <!-- Scripts -->
+    <script src="{% static '/js/app.min.js' %}"></script>
+    <script src="{% static '/js/custom.js' %}"></script>
+    <script src="{% static '/js/snackbar.js' %}"></script>
+{% endblock %}
+<script type="application/javascript">
+    {% if messages %}
+        {% for msg in messages %}
+            snackbar("{{ msg }}");
+        {% endfor %}
+    {% endif %}
+</script>
+
+<script>
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    var follow_ajax = false;
+
+    $(document).ready(function () {
+        $(".follow-btn").click(function () {
+            var form = new FormData();
+            var button = $(this);
+            form.append("user_id", $(this).attr("data-id"));
+            if (!follow_ajax) {
+                follow_ajax = true;
+                $.ajax({
+                    type: "POST",
+                    url: '/follow/',
+                    processData: false,
+                    contentType: false,
+                    data: form,
+                    success: function (data) {
+                        follow_ajax = false;
+                        if (data.status) {
+                            // follow
+                            button.text("Unfollow")
+                        } else {
+                            // unfollow
+                            button.text("Follow")
+                        }
+                    },
+                    error: function (xhr, errmsg, err) {
+
+                        console.log(xhr, errmsg, err);
+
+                    } // end error: function
+                });
+            }
+
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.img-over').click(function () {
+            var id = $(this).attr('id');
+            var data_url = $(this).attr('data-url');
+            console.log(data_url);
+            $.ajax({
+                method: 'GET',
+                url: data_url,
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    $('.modal-content').html(data)
+                    console.log("sadsadasd")
+                }
+            })
+        })
+    })
+</script>
+<script>
+    $(document).ready(function () {
+        $('.like').click(function (e) {
+            var shot_id = $(this).attr(('data-id'));
+            $.ajax({
+                method: "POST",
+                dataType: 'aplication/json',
+                data: {
+                    shot_id: shot_id,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (data) {
+                    snackbar(data.message);
+                    $('.like-' + shot_id).text(data.like_count);
+                    if (data.status) {
+                        i.removeClass('fa fa-heart-o likebutton');
+                        i.addClass("fa fa-heart likebutton");
+                    } else {
+                        i.addClass('fa fa-heart-o likebutton');
+                        i.removeClass("fa fa-heart likebutton");
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    Dropzone.options.my_dropzone = false;
+    Dropzone.autoDiscover = false;
+    Dropzone.options.my_dropzone = {
+        paramName: "orginal", // The name that will be used to transfer the file
+        maxFilesize: 50, // MB
+        maxFiles: 10
+    };
+    $(document).ready(function () {
+        $("#my_dropzone").dropzone({
+            url: "{% url 'picture-add' %}",
+            addRemoveLinks: true,
+            sending: function (file, xhr, formData) {
+                formData.append('image_data', '{{ image_data }}'); // send each image data
+            },
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            success: function (file, response) {
+                file.previewElement.classList.add("dz-success");
+                if (response.uploaded) {
+                    file.img_pk = response.pk;
+                } else {
+                    file.img_pk = 1;
+                }
+            },
+            removedfile: function (file, serverFileName) {
+                var file_pk = file.img_pk;
+                console.log(file_pk);
+                $.ajax({
+                    url: "{% url 'picture-delete' %}",
+                    type: "POST",
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {'remove_object': file_pk, 'image_data': '{{ image_data }}'}
+                });
+                //console.log($(this).closest('.dz-preview'));
+                var _ref;
+                return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+            },
+            error: function (file, response) {
+                file.previewElement.classList.add("dz-error");
+                $(file.previewElement).find('.dz-error-message').text(response);
+            }
+        });
+    });
+</script>
+</body>
+</html>

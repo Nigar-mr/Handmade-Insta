@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block settings %}
+{% endblock %}
+{% block page %}
+
+    <!-- Main container -->
+    <main>
+        <section class="no-border-bottom">
+            <div class="container">
+                <header class="section-header">
+                    <span>Upload</span>
+                    <h2>Add shot</h2>
+                    <p>Give a title, upload an image, and write a description to create a shot.</p>
+                </header>
+
+                <form action="" class="form-horizontal1" method="POST"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="image_data" value="{{ image_data }}">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6>Shot details</h6>
+                                </div>
+                                <div class="card-block">
+                                    {% for form in shot_detail %}
+                                        <div class="form-group">
+                                            {{ form }}
+                                            {#                                        <span class="help-block">Separate tags with comma</span>#}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="dropzone dropzone-previews dz-clickable" id="my_dropzone">
+
+                                    </div>
+
+                                </div>
+                                <button class="btn btn-primary btn-block" type="submit">Submit shot</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block cdn_js %}
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+{% endblock %}

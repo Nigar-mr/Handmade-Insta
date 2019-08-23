@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block page %}
+    <!-- Main container -->
+{#    <main>#}
+{##}
+{#        <!-- Page links -->#}
+{#        <div class="page-links">#}
+{#            <div class="container">#}
+{#                <div class="pull-left">#}
+{#                    <ul class="link-list">#}
+{#                        <li><a class="active" href="setting-profile.html">Profile</a></li>#}
+{#                        <li><a href="setting-socials.html">Social medias</a></li>#}
+{#                        <li><a href="setting-notification.html">Notification</a></li>#}
+{#                        <li><a href="setting-security.html">Security</a></li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- END Page links -->#}
+
+        <section class="no-border-bottom section-sm">
+            <div class="container">
+                <header class="section-header">
+                    <span>Settings</span>
+                    <h3>Profile settings</h3>
+                    <p>Change your name, avatar, location, description, etc.</p>
+                </header>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Profile</h6>
+                            </div>
+
+                            <div class="card-block">
+                                <form class="form-horizontal" method="post">
+                                    {% csrf_token %}
+                                    {% for settings_form in setting_profile %}
+                                        <div class="form-group">
+                                            <label for="input{{ settings_form.id_for_label }}"
+                                                   class="col-sm-2 control-label">{{ settings_form.label }}</label>
+                                            <div class="col-sm-10">
+                                                {{ settings_form }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <hr>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Avatar</h6>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="file" class="dropify" data-default-file="{{ request.user.get_image }}"
+                                           data-max-height="150" data-max-width="150">
+                                    <br>
+                                    <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+    <!-- END Main container -->
+
+{% endblock %}

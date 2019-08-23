@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="theshots is a directory listing template.">
+    <meta name="keywords" content="">
+
+    <title>Insta Tech</title>
+
+    <!-- Styles -->
+    <link href="assets/css/app.min.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700'
+          rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+    <link rel="icon" href="assets/img/favicon.ico">
+</head>
+
+<body class="sticky-nav">
+
+<!-- Navigation bar -->
+<nav class="navbar">
+    <div class="container">
+
+        <!-- Logo and navigation links -->
+        <div class="pull-left">
+            <a class="navbar-toggle" href="#" data-toggle="offcanvas"><i class="ti-menu"></i></a>
+
+            <div class="logo">
+                <a href="index.html"><img src="assets/img/logo.png" alt="logo"></a>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a class="active" href="index.html">Home</a>
+                    <ul>
+                        <li><a href="index.html">Version 1</a></li>
+                        <li><a class="active" href="index2.html">Version 2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Explore</a>
+                    <ul>
+                        <li><a href="explore-style1.html">Style 1</a></li>
+                        <li><a href="explore-style2.html">Style 2</a></li>
+                        <li><a href="explore-style3-cols4.html">Style 3 - Cols 4</a></li>
+                        <li><a href="explore-style3-cols3.html">Style 3 - Cols 3</a></li>
+                        <li><a href="explore-style3-cols2.html">Style 3 - Cols 2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pages</a>
+                    <ul>
+                        <li><a href="shot-add.html">Add Shot</a></li>
+                        <li><a href="shot.html">Shot - Image</a></li>
+                        <li><a href="shot-gallery.html">Shot - Gallery</a></li>
+                        <li><a href="page-about.html">About</a></li>
+                        <li><a href="page-contact.html">Contact</a></li>
+                        <li><a href="page-faq.html">FAQ</a></li>
+                        <li><a href="page-search.html">Search</a></li>
+                        <li><a href="page-typography.html">Typography</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">User account</a>
+                    <ul>
+                        <li><a href="user-profile.html">Profile</a></li>
+                        <li><a href="user-followering.html">Followers - 1</a></li>
+                        <li><a href="user-followers.html">Followers - 2</a></li>
+                        <li><a href="setting-profile.html">Settings</a></li>
+                        <li><a href="user-login.html">Login</a></li>
+                        <li><a href="user-register.html">Register</a></li>
+                        <li><a href="user-forget-pass.html">Forget pass</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!-- END Logo and navigation links -->
+
+        <!-- User account and action buttons -->
+        <div class="pull-right">
+            <a class="btn-navbar search-opener" href="#"><i class="ti-search"></i></a>
+            <a class="btn-navbar" href="shot-add.html"><i class="ti-plus"></i></a>
+
+            <div class="dropdown user-account">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                    <img src="assets/img/avatar-2.jpg" alt="avatar">
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="user-profile.html">Profile</a></li>
+                    <li><a href="setting-profile.html">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- END User account and action buttons -->
+
+        <!-- Search screen -->
+        <div class="search-screen closed">
+            <button class="search-closer"><i class="ti-close"></i></button>
+            <form class="search-form" action="http://thetheme.io/theshots/page-search.html">
+                <input type="text" autocomplete="off" placeholder="Type to search...">
+            </form>
+        </div>
+        <!-- END Search screen -->
+
+    </div>
+</nav>
+<!-- END Navigation bar -->
+
+
+<!-- Site header -->
+<header class="site-header color-alt overlay-black bg-fixed" style="background-image: url(assets/img/bg-header.jpg)">
+    <div class="container">
+        <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+            <h1><strong>TheShots</strong></h1>
+            <h4>Upload your design, we <strong>spread</strong> it online!</h4>
+            <br>
+            <p class="hidden-xs">Nullam at elementum risus. Quisque ornare hendrerit risus, sed cursus lectus accumsan
+                eu. Suspendisse non ultrices urna. Aenean vel leo dictum, lobortis est non, sollicitudin lorem. Ut porta
+                non orci ac varius. Donec convallis mi non leo posuere, non ultricies nunc consequat. Donec velit risus,
+                ornare ac risus vitae.</p>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 header-slider-wrapper">
+            <ul class="header-shot-slider">
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-3.jpg" alt="shot"></a></li>
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-9.jpg" alt="shot"></a></li>
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-5.jpg" alt="shot"></a></li>
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-2.jpg" alt="shot"></a></li>
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-6.jpg" alt="shot"></a></li>
+                <li><a class="shot-modal-opener" href="#"><img src="assets/img/shot-4.jpg" alt="shot"></a></li>
+            </ul>
+        </div>
+
+    </div>
+</header>
+<!-- END Site header -->
+
+
+<!-- Main container -->
+<main>
+
+    <!-- Staff pick -->
+    <section>
+        <div class="container">
+            <header class="section-header">
+                <span>Featured</span>
+                <h2>Pick by staff</h2>
+                <p>Take a look at the best shots uploaded in the website selected by our community</p>
+            </header>
+
+            <div class="row">
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-3.jpg" alt=""></a>
+                            <span class="like liked">329</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-4.jpg" alt=""></a>
+                            <span class="like liked">553</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-2.jpg" alt=""></a>
+                            <span class="like">953</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-5.jpg" alt=""></a>
+                            <span class="like">426</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-9.jpg" alt=""></a>
+                            <span class="like liked">198</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-6.jpg" alt=""></a>
+                            <span class="like">782</span>
+                            <span class="black-overlay"></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <div class="col-xs-12 col-sm-4 col-md-offset-4">
+                    <br><br>
+                    <a class="btn btn-primary btn-block" href="explore-style3-cols3.html">See all</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- END Staff pick -->
+
+
+    <!-- Recent -->
+    <section class="bg-white">
+        <div class="container">
+            <header class="section-header">
+                <span>New uploaded</span>
+                <h2>Recent</h2>
+                <p>Shots that recently uploaded to the website by our global community</p>
+            </header>
+
+            <div class="row">
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-7.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-1.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">20 mins ago</time>
+                                in <a href="page-search.html">Website</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-8.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-2.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">56 mins ago</time>
+                                in <a href="page-search.html">App</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-3.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-3.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">1 hours ago</time>
+                                in <a href="page-search.html">Event</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-9.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-4.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">1 hours ago</time>
+                                in <a href="page-search.html">App</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-6.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-5.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">1 hours ago</time>
+                                in <a href="page-search.html">Dashboard</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <!-- Shot -->
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="shot shot-small">
+                        <div class="shot-preview">
+                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-5.jpg" alt=""></a>
+                        </div>
+
+                        <div class="shot-info">
+                            <a href="user-profile.html"><img src="assets/img/avatar-1.jpg" alt="avatar"></a>
+                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
+                            <p>
+                                <time datetime="2016-02-04 22:30">2 hours ago</time>
+                                in <a href="page-search.html">App</a></p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Shot -->
+
+                <div class="col-xs-12 col-sm-4 col-md-offset-4">
+                    <br><br>
+                    <a class="btn btn-primary btn-block" href="explore-style3-cols3.html">See all</a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- END Recent -->
+
+
+    <!-- Featured users -->
+    <section>
+        <div class="container">
+            <header class="section-header">
+                <span>The bests</span>
+                <h2>Featured users</h2>
+                <p>Our weekly selected users with popular shots</p>
+            </header>
+
+            <div class="row">
+
+                <!-- User widget -->
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="user-widget-mini">
+                        <a href="user-profile.html"><img src="assets/img/avatar-1.jpg" alt="avatar"></a>
+                        <h5><a href="#">John Doe</a></h5>
+                        <p class="lead">Interaction designer</p>
+                        <small>327 Shot</small>
+                    </div>
+                </div>
+                <!-- END User widget -->
+
+                <!-- User widget -->
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="user-widget-mini">
+                        <a href="user-profile.html"><img src="assets/img/avatar-2.jpg" alt="avatar"></a>
+                        <h5><a href="#">Jose Shams</a></h5>
+                        <p class="lead">Front-end developer</p>
+                        <small>135 Shot</small>
+                    </div>
+                </div>
+                <!-- END User widget -->
+
+                <!-- User widget -->
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="user-widget-mini">
+                        <a href="user-profile.html"><img src="assets/img/avatar-3.jpg" alt="avatar"></a>
+                        <h5><a href="#">Mary Armiri</a></h5>
+                        <p class="lead">Startup booster</p>
+                        <small>62 Shot</small>
+                    </div>
+                </div>
+                <!-- END User widget -->
+
+                <!-- User widget -->
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="user-widget-mini">
+                        <a href="user-profile.html"><img src="assets/img/avatar-5.jpg" alt="avatar"></a>
+                        <h5><a href="#">Dumduri</a></h5>
+                        <p class="lead">UI/UX designer</p>
+                        <small>659 Shot</small>
+                    </div>
+                </div>
+                <!-- END User widget -->
+
+            </div>
+
+        </div>
+    </section>
+    <!-- END Featured users -->
+
+
+    <!-- Facts -->
+    <section class="section-sm no-border-bottom overlay-black" style="background-image: url(assets/img/bg-facts.jpg)">
+        <div class="container">
+
+            <div class="row">
+                <div class="counter color-alt col-md-3 col-sm-6">
+                    <i class="fa fa-camera"></i>
+                    <p><span data-from="0" data-to="6890"></span>+</p>
+                    <h6>Shots</h6>
+                </div>
+
+                <div class="counter color-alt col-md-3 col-sm-6">
+                    <i class="fa fa-user"></i>
+                    <p><span data-from="0" data-to="1200"></span>+</p>
+                    <h6>Members</h6>
+                </div>
+
+                <div class="counter color-alt col-md-3 col-sm-6">
+                    <i class="fa fa-heart"></i>
+                    <p><span data-from="0" data-to="36800"></span>+</p>
+                    <h6>Likes</h6>
+                </div>
+
+                <div class="counter color-alt col-md-3 col-sm-6">
+                    <i class="fa fa-comment"></i>
+                    <p><span data-from="0" data-to="15400"></span>+</p>
+                    <h6>Comments</h6>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- END Facts -->
+
+</main>
+<!-- END Main container -->
+
+
+<!-- Site footer -->
+<footer class="site-footer no-margin-top">
+
+    <!-- Top section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+                <h6>About</h6>
+                <p class="text-justify"><strong>TheShots</strong> is a powerful, responsive, and high-performance image
+                    listing template. It's based on Bootstrap and contains a lot of components to easily make an image
+                    listing website. This template comes with a simple yet beautiful design which focused on ease of use
+                    for users. Take a tour in the website and check our intensive <a
+                            href="http://shamsoft.net/theshots/docs" target="_blank">online documentation</a> before
+                    make a purchuse!</p>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-2">
+                <h6>Company</h6>
+                <ul class="footer-links">
+                    <li><a href="page-about.html">About us</a></li>
+                    <li><a href="page-typography.html">How it works</a></li>
+                    <li><a href="page-typography.html">Terms of use</a></li>
+                    <li><a href="page-typography.html">Privacy policy</a></li>
+                    <li><a href="page-contact.html">Contact us</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-2">
+                <h6>Support</h6>
+                <ul class="footer-links">
+                    <li><a href="page-faq.html">Help center</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Forums</a></li>
+                    <li><a href="#">Official blog</a></li>
+                    <li><a href="#">Ask question</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-12 col-sm-4 col-md-3">
+                <h6>Newsletter</h6>
+                <p><strong>Subscribe</strong> to our newsletter to receive news, updates, and special offers:</p>
+                <br>
+                <input type="text" class="form-control" placeholder="Enter your email address">
+                <button class="btn btn-primary btn-sm btn-block" type="button"><i class="fa fa-paper-plane"></i>
+                    Subscribe
+                </button>
+            </div>
+        </div>
+
+        <hr>
+    </div>
+    <!-- END Top section -->
+
+    <!-- Bottom section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+                <p class="copyright-text">Copyrights &copy; 2016 All Rights Reserved by <a
+                        href="http://themeforest.net/user/shamsoft">ShaMSofT</a>.</p>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END Bottom section -->
+
+</footer>
+<!-- END Site footer -->
+
+
+<!-- Back to top button -->
+<a id="scroll-up" href="#"><i class="ti-angle-up"></i></a>
+<!-- END Back to top button -->
+
+<!-- Shot description modal -->
+<div id="shot-modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <a class="close-modal" data-dismiss="modal" href="#"><i class="ti-close"></i></a>
+        <div class="modal-content"></div>
+    </div>
+</div>
+<!-- END Shot description modal -->
+
+
+<!-- Scripts -->
+<script src="assets/js/app.min.js"></script>
+<script src="assets/js/custom.js"></script>
+
+
+</body>
+</html>

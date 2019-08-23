@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load common %}
+{% block page %}
+    {% block settings %}
+    {% endblock %}
+
+    <!-- Main container -->
+    <main>
+        <!-- Shots list -->
+        <section class="no-border-bottom section-sm">
+            <div class="container">
+                <div class="row">
+                    <!-- Shot -->
+                    {% for shot in explore %}
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 img-over"
+                             data-url="{% url 'into-shot' shot.id %}">
+                            <div class="shot shot-small">
+                                <div class="shot-preview">
+                                    <img style="width: 262.5px; height: 180px;" class="card-img-top img"
+                                         src="/media/{{ shot.Preview_image }}"
+                                         alt="Card image cap">
+                                    {% if request.user in shot.get_likers %}
+                                        <span data-id="{{ shot.id }}" class="like liked"></span>
+                                    {% else %}
+                                        <span data-id="{{ shot.id }}" class="like"></span>
+                                    {% endif %}
+                                </div>
+                                <div class="shot-detail">
+                                    <div class="shot-info">
+                                        <a href="user-profile.html"><img src="{{ shot.user.get_image }}">
+                                            <span data-id="{{ shot.id }}" class="like liked"></span>
+                                            <p>{{ shot.user.get_username }}</p>
+                                        </a>
+                                    </div>
+                                    <ul class="shot-stats">
+                                        <li><i class="fa fa-eye"></i><span>{{ shot.view.all.count }}</span></li>
+                                        <li><a href="#"><i
+                                                class="fa fa-comments"></i><span>{{ shot.comment_set.all.count }}</span></a>
+                                        </li>
+                                        <li><a href="#">
+                                            {% if request.user in shot.get_likers %}
+                                                <i class="fa fa-heart likebutton-{{ shot.id }}"></i>
+                                            {% else %}
+                                                <i class="fa fa-heart-o likebutton-{{ shot.id }}"></i>
+                                            {% endif %}
+                                            <span>{{ shot.like_count }}</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <div class="spinner">
+
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
+        </div>
+        <!-- END Shots list -->
+    </main>
+    <!-- END Main container -->
+{% endblock %}

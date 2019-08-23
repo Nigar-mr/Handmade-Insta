@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block page %}
+
+    <!-- Main container -->
+
+    <section class="no-border-bottom section-sm">
+        <div class="container">
+            <header class="section-header">
+                <span>Settings</span>
+                <h3>Social medias profiles</h3>
+                <p>Update your facebook, twitter, linkedin, etc. address</p>
+            </header>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Social pages</h6>
+                        </div>
+
+                        <div class="card-block">
+                            <form class="form-horizontal">
+                                {% for tables in social_site %}
+                                    <div class="form-group">
+                                    <label class="col-sm-2 control-label">{{ tables.label }}</label>
+                                    <div class="col-sm-6">
+                                    <input type="text" class="form-control"
+                                    value="">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    </main>
+    <!-- END Main container -->
+
+{% endblock %}

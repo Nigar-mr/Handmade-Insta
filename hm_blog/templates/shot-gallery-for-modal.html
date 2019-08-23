@@ -1,0 +1,163 @@
+{% load humanize %}
+{% load common %}
+<section class="no-border-bottom section-sm">
+    <div class="container-fluid">
+        <header class="section-header">
+            {#            {% for shot in shot %}#}
+            <h3>{{ shot.Title }}</h3>
+            <p>Posted on {{ shot.publish_date }} for <a href="user-profile.html">{{ shot.user.username }}</a></p>
+        </header>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <!-- Shot and details -->
+                <div class="card no-margin-top">
+                    <div class="card-block">
+                    <div class="lSSlideOuter ">
+                        <div class="lSSlideWrapper usingCss" style="transition-duration: 0ms; transition-timing-function: ease;">
+                            <ul class="image-gallery lightSlider lsGrabbing lSSlide" style="width: 2796px; transform: translate3d(-1977px, 0px, 0px); height: 350px; padding-bottom: 0%;">
+                                <li data-thumb="assets/img/shot-big-4-thumb.jpg" data-src="assets/img/shot-big-4.jpg" class="clone left" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-4-thumb.jpg" alt="thumb">
+              </li>
+              <li data-thumb="assets/img/shot-big-1-thumb.jpg" data-src="assets/img/shot-big-1.jpg" class="lslide" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-1-thumb.jpg" alt="thumb">
+              </li>
+
+              <li data-thumb="assets/img/shot-big-2-thumb.jpg" data-src="assets/img/shot-big-2.jpg" class="lslide" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-2-thumb.jpg" alt="thumb">
+              </li>
+
+              <li data-thumb="assets/img/shot-big-3-thumb.jpg" data-src="assets/img/shot-big-3.jpg" class="lslide" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-3-thumb.jpg" alt="thumb">
+              </li>
+
+              <li data-thumb="assets/img/shot-big-4-thumb.jpg" data-src="assets/img/shot-big-4.jpg" class="lslide active" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-4-thumb.jpg" alt="thumb">
+              </li>
+            <li data-thumb="assets/img/shot-big-1-thumb.jpg" data-src="assets/img/shot-big-1.jpg" class="clone right" style="width: 466px; margin-right: 0px;">
+                <img src="assets/img/shot-big-1-thumb.jpg" alt="thumb">
+              </li></ul><div class="lSAction"><a class="lSPrev"></a><a class="lSNext"></a></div></div><ul class="lSPager lSGallery" style="margin-top: 5px; transition-duration: 400ms; width: 377.3px; transform: translate3d(0px, 0px, 0px);"><li style="width:100%;width:89.2px;margin-right:5px" class=""><a href="#"><img src="assets/img/shot-big-1-thumb.jpg"></a></li><li style="width:100%;width:89.2px;margin-right:5px"><a href="#"><img src="assets/img/shot-big-2-thumb.jpg"></a></li><li style="width:100%;width:89.2px;margin-right:5px"><a href="#"><img src="assets/img/shot-big-3-thumb.jpg"></a></li><li style="width:100%;width:89.2px;margin-right:5px" class="active"><a href="#"><img src="assets/img/shot-big-4-thumb.jpg"></a></li></ul></div>
+
+                        <ul class="image-gallery">
+                            {% for shot_image in shot.addimages_set.all %}
+                                <li data-thumb="{{ shot_image.image.url }}" data-src="{{ shot_image.image.url }}">
+                                    <img src="{{ shot_image.image.url }}" alt="thumb">
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <hr>
+                        <p>{{ shot.Description }}</p>
+                    </div>
+                </div>
+                <!-- END Shot and details -->
+                <!-- Comments -->
+                <div id="comments" class="card">
+                    <div class="card-header">
+                        <h6>Comments ({{ shot.comment_set.all.count }})</h6>
+
+                        <div class="comment-pagination">
+                            <a class="prev" href="#"><i class="ti-angle-left"></i></a>
+                            <a class="next" href="#"><i class="ti-angle-right"></i></a>
+                        </div>
+                    </div>
+                    <ul class="comments">
+                        <li>
+                            {% for cm in comment_post %}
+                            <a href="user-profile.html"><img src="{{ cm.user.get_image }}" alt=""></a>
+                            <h6><a href="user-profile.html">{{ cm.user.username }}</a>
+                                <time datetime="2016-02-04 22:30">{{ cm.publish_date|naturaltime }}</time>
+                            </h6>
+                            <p>{{ cm.comment }}</p>
+                            {% endfor %}
+                        </li>
+
+                    </ul>
+                    <form class="comment-form" action="{% url 'into-shot' shot.id %}" method="post">
+                        {% csrf_token %}
+                        <img src="{{ user.get_image }}" alt="">
+                        {% for form in comment %}
+                            <div class="form-group">
+                                <p>{{ form }}</p>
+                            </div>
+                        {% endfor %}
+                    </form>
+                </div>
+                <!-- END Comments -->
+            </div>
+            <aside class="col-xs-12 col-md-4 shot-sidebar">
+                <!-- User widget -->
+                <div class="sidebar-block">
+                    <div class="shot-by-widget">
+                        <a href="user-profile.html"><img src="{{ shot.user.get_image }}" alt="avatar"></a>
+                        <a class="username" href="{% url 'profile' shot.user.id %}">{{ shot.user.username }}</a>
+                        <p class="title">Social company</p>
+                        <p class="subtitle">Ut pulvinar libero tortor, laoreet suscipit tellus varius nec.</p>
+                        <ul class="user-stats">
+                            <li><a href="user-profile.html"><i>Shots</i><span>{{ shot.user.shotdetails_set.all.count }}</span></a></li>
+                            <li><a href="user-followering.html"><i>Followers</i><span>{{ shot.user.followers.all.count }}</span></a></li>
+                            <li><a href="user-followering.html"><i>Following</i><span>{{ shot.user.following.all.count }}</span></a></li>
+                        </ul>
+                       {% if shot.user != request.user %}
+                                <ul class="col-sm-12 col-md-6 action-buttons">
+                                {% if request.user in shot.user|get_followers %}
+                                    <a class="btn btn-success follow-btn" data-id="{{ shot.user.id }}"
+                                    >Unfollow</a>
+                                {% else %}
+                                    <a class="btn btn-success follow-btn" data-id="{{ shot.user.id }}"
+                                    >Follow</a>
+                                {% endif %}
+                            {% else %}
+{#                                <a href="{% url 'update' shot.id %}">Update</a>#}
+                            {% endif %}
+                    </div>
+                </div>
+                <!-- END User widget -->
+                <!-- Shot stats -->
+                <div class="sidebar-block">
+                    <ul class="single-shot-stats">
+                        <li><i class="fa fa-eye"></i><span>{{ shot.view.all.count }}</span></li>
+                        <li><a class="like" href="#"><i class="fa fa-heart"></i><span>{{ shot.like_count }}</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END Shot stats -->
+                <!-- Details -->
+                <div class="sidebar-block">
+                    <h6>Details</h6>
+                    <dl class="half-half">
+                        <dt>Aspect Ratio</dt>
+                        <dd>{{ shot.aspect }}</dd>
+
+                        <dt>Location</dt>
+                        <dd>{{ shot.location }}</dd>
+
+                        <dt>License</dt>
+                        <dd>{{ shot.lisence }}</dd>
+                    </dl>
+                </div>
+                <!-- END Details -->
+                <!-- Tags -->
+                <div class="sidebar-block">
+                    <h6>Tags</h6>
+                    <div class="tag-list">
+                        {{ shot.tags }}
+                    </div>
+                </div>
+                <!-- END Tags -->
+                <!-- Share -->
+                <div class="sidebar-block">
+                    <h6>Share on</h6>
+                    <ul class="social-icons text-center">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <!-- END Share -->
+                <!-- More shots -->
+                <!-- END More shots -->
+            </aside>
+        </div>
+    </div>
+</section>

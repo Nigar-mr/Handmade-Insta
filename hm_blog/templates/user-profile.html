@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block settings %}
+{% endblock %}
+{% block page %}
+    {% load humanize %}
+
+    {% load static %}
+    <!-- Main container -->
+    <main>
+        {% block profile %}
+            <!-- Profile head -->
+            <div class="profile-head">
+                <div class="container">
+                    <a href="user-profile.html"><img src="{{ profile_user.get_image }}" alt="avatar"></a>
+                    <h5><a href="#">{{ profile_user.get_username }}</a></h5>
+                    <p><i class="fa fa-map-marker"></i>{{ profile_user.location|default:"" }}</p>
+                    <p class="lead">{{ profile_user.hedline|default:"" }}</p>
+                    <p>{{ profile_user.description|default:"" }}</p>
+
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://www.facebook.com/nigar.muradli.718"><i
+                                class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href=""><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa fa-globe"></i></a></li>
+                    </ul>
+                    <div class="row bottom-bar">
+                        <ul class="col-sm-12 col-md-6 tab-list">
+                            <li class="active"><a
+                                    href="#"><i>Shots</i><span>{{ profile_user.shotdetails_set.all.count }}</span></a>
+                            </li>
+                            <li class="hidden-xs"><a href="user-profile.html"><i>Likes</i><span>1.6K</span></a></li>
+                            <li><a href="{% url 'followers' user.id %}"><i>Followers</i><span>{{ shot.user.followers.all.count }}</span></a></li>
+                            <li><a href="{% url 'following' user.id %}"><i>Following</i><span>{{ shot.user.following.all.count }}</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- END Profile head -->
+        {% endblock %}
+        <!-- User shots -->
+        <section class="no-border-bottom section-sm">
+            <div class="container">
+                <div class="row">
+                    <!-- Shot -->
+                    {% for shot in shot_detail_model %}
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 img-over"
+                                 data-url="{% url 'into-shot' shot.id %}">
+                                <div class="shot shot-minimal">
+                                    <div class="shot-preview">
+                                        <img style="width: 262.5px; height: 196.88px;" class="card-img-top"
+                                             src="/media/{{ shot.Preview_image }}"
+                                             alt="Card image cap">
+                                        <a class="text-overlay" href="shot-gallery.html">
+                                            <span class="heading">{{ shot.Title }}</span>
+                                            <span class="desc">{{ shot.Description }}</span>
+                                            <span class="text-muted">Last updated {{ shot.publish_date|naturaltime }} </span>
+                                        </a>
+                                    </div>
+
+                                    <div class="shot-detail">
+                                        <div class="shot-info">
+                                            <p><a href="page-search.html">{{ profile_user.username }}</a></p>
+                                        </div>
+
+                                        <ul class="shot-stats">
+                                            <li><i class="fa fa-eye"></i><span>{{ shot.view.all.count }}</span></li>
+                                            <li><a href="shot-gallery.html"><i
+                                                    class="fa fa-comments"></i><span>{{ shot.comment_set.all.count }}</span></a>
+                                            </li>
+                                            <li><a class="like-{{ shot.id }}" href="#"><i
+                                                    class="fa fa-heart"></i><span>{{ shot.like_count }}</span></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+     <div class="spinner">
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
+        </div>
+        <!-- END Shot -->
+        </div>
+
+        </div>
+        </section>
+        <!-- END User shots -->
+
+    </main>
+    <!-- END Main container -->
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('.img-over').click(function () {
+                var id = $(this).attr('id');
+                var data_url = $(this).attr('data-url');
+                console.log(data_url);
+                $.ajax({
+                    method: 'GET',
+                    url: data_url,
+                    data: {
+                        id: id
+                    },
+                    success: function (data) {
+                        $('.modal-content').html(data)
+                        console.log("sadsadasd")
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock %}

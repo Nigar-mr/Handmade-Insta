@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block page %}
+    {% load static %}
+    <!-- Main container -->
+    <main>
+
+        <section class="no-border-bottom section-sm" style="background-image: url('{% static 'img/register_bg.jpeg' %}')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6>Sign up</h6>
+                            </div>
+                            <div class="card-block">
+                                <br>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% for form in register_form %}
+                                        <div class="form-group">
+                                            {{ form }}
+                                        </div>
+                                    {% endfor %}
+                                    <p class="small text-muted">You're accepting our <a href="#">terms and
+                                        conditions</a> by
+                                        clicking on following button.</p>
+                                    <br>
+                                    <button class="btn btn-primary btn-block" type="submit">Register</button>
+                                </form>
+                            </div>
+
+                            <div class="card-footer">
+                                <a href="user-login.html">Already a member?</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <!-- END Main container -->
+{% endblock %}
