@@ -156,7 +156,7 @@ class Verification(models.Model):
 
 
 class ShotDetails(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True, blank=True)
     Title = models.TextField(null=True, blank=True)
     Preview_image = models.ImageField(upload_to='shotadd/', null=True, blank=True)
     # Images = models.ImageField(upload_to='')

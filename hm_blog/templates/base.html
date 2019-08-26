@@ -85,8 +85,9 @@
         <!-- Search screen -->
         <div class="search-screen closed">
             <button class="search-closer"><i class="ti-close"></i></button>
-            <form class="search-form" action="http://thetheme.io/theshots/page-search.html">
-                <input type="text" autocomplete="off" placeholder="Type to search...">
+            <form class="search-form">
+                <input type="text" name="q" value="{{ request.GET.q }}" autocomplete="off"
+                       placeholder="Type to search...">
             </form>
         </div>
         <!-- END Search screen -->
@@ -208,6 +209,7 @@
     <script src="{% static '/js/custom.js' %}"></script>
     <script src="{% static '/js/snackbar.js' %}"></script>
 {% endblock %}
+
 <script type="application/javascript">
     {% if messages %}
         {% for msg in messages %}
@@ -379,5 +381,35 @@
         });
     });
 </script>
+{#<script>#}
+{#        var fetch_data = true;#}
+{#        var page = 2;#}
+{#        var last_page = {{ page_count }}#}
+{#            $(window).on("scroll", function () {#}
+{#                var scrollHeight = $(document).height();#}
+{#                var scrollPosition = $(window).height() + $(window).scrollTop();#}
+{#                if ((scrollHeight - scrollPosition) < 8) {#}
+{#                    if (fetch_data) {#}
+{#                        fetch_data = false;#}
+{#                        $.ajax({#}
+{#                            url: "{% url 'explore' %}?page=" + page,#}
+{#                            method: "GET",#}
+{#                            success: function (data) {#}
+{#                                $(".main-data").append(data);#}
+{#                                page += 1;#}
+{#                                if (page > last_page) {#}
+{#                                    fetch_data = false;#}
+{#                                }#}
+{#                                else {#}
+{#                                    fetch_data = true#}
+{#                                }#}
+{#                            }#}
+{#                        })#}
+{#                    }#}
+{#                }#}
+{#            });#}
+{#    </script>#}
+{% block js %}
+{% endblock %}
 </body>
 </html>

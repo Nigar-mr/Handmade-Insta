@@ -1,13 +1,3 @@
-{% extends 'base.html' %}
-{% load humanize %}
-{% load common %}
-{% block page %}
-    {% block settings %}
-    {% endblock %}
-
-    <!-- Main container -->
-    <main>
-        <!-- Shots list -->
         <section class="no-border-bottom section-sm main-data">
             <div class="container">
                 <div class="row">
@@ -54,42 +44,3 @@
                 </div>
             </div>
         </section>
-        <div class="spinner">
-            <span class="dot1"></span>
-            <span class="dot2"></span>
-            <span class="dot3"></span>
-        </div>
-        <!-- END Shots list -->
-    </main>
-    <!-- END Main container -->
-{% endblock %}
-{% block js %}
-<script>
-        var fetch_data = true;
-        var page = 2;
-        var last_page = {{ page_count }}
-            $(window).on("scroll", function () {
-                var scrollHeight = $(document).height();
-                var scrollPosition = $(window).height() + $(window).scrollTop();
-                if ((scrollHeight - scrollPosition) < 8) {
-                    if (fetch_data) {
-                        fetch_data = false;
-                        $.ajax({
-                            url: "{% url 'explore' %}?page=" + page,
-                            method: "GET",
-                            success: function (data) {
-                                $(".main-data").append(data);
-                                page += 1;
-                                if (page > last_page) {
-                                    fetch_data = false;
-                                }
-                                else {
-                                    fetch_data = true
-                                }
-                            }
-                        })
-                    }
-                }
-            });
-    </script>
-{% endblock %}

@@ -5,12 +5,14 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from hm_blog.models import Menu, Unique, Footer, FooterIcons, RowMenu, Verification, SocialSettings, \
-    AddImages, ShotDetails, About, AboutTeam, Like, Follow, Comment, ContactUs
+    AddImages, ShotDetails, About, AboutTeam, Like, Follow, Comment, ContactUs, MyUser
 from hm_blog.forms import RegisterForm, LoginForm, ShotDetailForm, SettingProfileForm, CommentForm, \
     ContactForm
 import uuid
 from django.views import generic
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -104,10 +106,10 @@ def logout_page(request):
     return redirect("home")
 
 
-def explore(request):
-    context = get_context()
-    context['explore'] = ShotDetails.objects.all()
-    return render(request, 'explore-style3-cols3.html', context)
+# def explore(request):
+#     context = get_context()
+#     context['explore'] = ShotDetails.objects.all()
+#     return render(request, 'explore-style3-cols3.html', context)
 
 
 @login_required
@@ -116,8 +118,13 @@ def profile(request, id):
     user = User.objects.filter(id=id).last()
     context['profile'] = SettingProfileForm()
     context["profile_user"] = user
-    context['shot_detail_model'] = ShotDetails.objects.filter(user=user)
-    return render(request, 'user-profile.html', context)
+    page = Paginator(ShotDetails.objects.filter(user=user), 12)
+    context['shot_detail_model'] = page.get_page(request.GET.get('page', 1))
+    context['page_count'] = page.num_pages
+    if request.is_ajax():
+        return render(request, "explore.html", context)
+    else:
+        return render(request, 'user-profile.html', context)
 
 
 @login_required
@@ -183,7 +190,9 @@ def social_settings(request):
 @login_required
 def explore(request):
     context = get_context()
-    context['explore'] = ShotDetails.objects.all()
+    page = Paginator(ShotDetails.objects.all(), 8)
+    context['explore'] = page.get_page(request.GET.get('page', 1))
+    context['page_count'] = page.num_pages
     if request.method == "POST" and request.is_ajax():
         shot_id = request.POST.get('shot_id')
         shot = ShotDetails.objects.filter(id=shot_id).last()
@@ -210,7 +219,22 @@ def explore(request):
                     'like_count': shot.like_count,
                     'status': False
                 })
-    return render(request, 'explore-style3-cols3.html', context)
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        explore = ShotDetails.objects.filter(
+            Q(tags__icontains=query) |
+            Q(location__icontains=query) |
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
+        page = Paginator(explore, 8)
+        context['explore'] = page.get_page(request.GET.get('page', 1))
+
+    if request.is_ajax():
+        return render(request, "explore.html", context)
+    else:
+        return render(request, 'explore-style3-cols3.html', context)
 
 
 def picture_add(request):
@@ -406,3 +430,20 @@ def ContactView(request):
             # return HttpResponse('else')
 
     return render(request, 'page-contact.html', context)
+
+
+def search(request):
+    context = get_context()
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        context['explore'] = ShotDetails.objects.filter(
+            Q(tags__icontains=query) |
+            Q(location__icontains=query) |
+            Q(get_user_model=query) |
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) &
+            Q(user__last_name__icontains=query)
+        )
+
+
+    return render(request, 'page-search.html', context)
