@@ -1,20 +1,24 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from hm_blog.models import Menu, Unique, Footer, FooterIcons, RowMenu, Verification, SocialSettings, \
     AddImages, ShotDetails, About, AboutTeam, Like, Follow, Comment, ContactUs
 from hm_blog.forms import RegisterForm, LoginForm, ShotDetailForm, SettingProfileForm, CommentForm, \
-    ContactForm
+    ContactForm, ForgetForm, PasswordChangeForm
 import uuid
 from django.views import generic
 from django.contrib.auth import get_user_model
 
 # Create your views here.
+from hm_blog.task import password_verification
 
 User = get_user_model()
+
 
 def get_context():
     context = {}
@@ -42,22 +46,27 @@ def home(request):
     context['footer'] = Footer.objects.all()
     context['footer_icons'] = FooterIcons.objects.all()
     context['login_form'] = LoginForm()
-    # if not request.user.is_authenticated:
-    if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    return redirect("profile")
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data.get("username")
+                password = form.cleaned_data.get("password")
+                # username= request.POST.get("username")
+                # password =request.POST.get("password")
+                user = authenticate(username=username, password=password)
+                # print(username)
+                if user:
+                    if user.is_active:
+                        login(request, user)
+                        return redirect("home")
+                else:
+                    messages.error(request, "Istifadəçi adı və ya şifrə yanlışdır!!!")
+                    return redirect("home")
+
             else:
-                messages.error(request, "Istifadəçi adı və ya şifrə yanlışdır!!!")
                 return redirect("home")
-        else:
-            return redirect("home")
+
     return render(request, "home.html", context)
 
 
@@ -68,7 +77,7 @@ def register(request):
         form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(request.POST.get('Password'))
+            user.set_password(request.POST.get('password'))
             user.is_active = False
             user.save()
             messages.success(
@@ -98,16 +107,56 @@ def verify_view(request, token, user_id):
     else:
         return redirect('home')
 
+class verify_passw(generic.View):
+
+    def get(self, request, user_id, token):
+        verify = Verification.objects.filter(
+            user_id=user_id,
+            token=token,
+        ).last()
+        if verify:
+            context = get_context()
+            context['passw_form'] = PasswordChangeForm()
+            return render(request, 'user-forget-pass.html', context)
+        else:
+            # return redirect('home')
+            return HttpResponse("else")
+
+    def post(self, request, user_id, token):
+        verify = Verification.objects.filter(
+            user_id=user_id,
+            token=token
+
+        ).last()
+        if verify:
+            if not verify.expire:
+                verify.expire = True
+                verify.save()
+                form = PasswordChangeForm(request.POST)
+                if form.is_valid():
+                    passowrd = form.cleaned_data.get('new_passw')
+                    print(passowrd)
+                    verify.user.set_password(passowrd)
+                    verify.user.save()
+
+                    return redirect('home')
+                else:
+                    return redirect('home')
+            else:
+                return redirect('home')
+        else:
+            return redirect('home')
+
 
 def logout_page(request):
     logout(request)
     return redirect("home")
 
 
-def explore(request):
-    context = get_context()
-    context['explore'] = ShotDetails.objects.all()
-    return render(request, 'explore-style3-cols3.html', context)
+# def explore(request):
+#     context = get_context()
+#     context['explore'] = ShotDetails.objects.all()
+#     return render(request, 'explore-style3-cols3.html', context)
 
 
 @login_required
@@ -116,8 +165,15 @@ def profile(request, id):
     user = User.objects.filter(id=id).last()
     context['profile'] = SettingProfileForm()
     context["profile_user"] = user
-    context['shot_detail_model'] = ShotDetails.objects.filter(user=user)
-    return render(request, 'user-profile.html', context)
+    # context['shot_detail_model'] = ShotDetails.objects.filter(user=user)
+    # return render(request, 'user-profile.html', context)
+    page = Paginator(ShotDetails.objects.filter(user=user), 8)
+    context['shot_detail_model'] = page.get_page(request.GET.get('page', 1))
+    context['page_count'] = page.num_pages
+    if request.is_ajax():
+        return render(request, "explore.html", context)
+    else:
+        return render(request, 'user-profile.html', context)
 
 
 @login_required
@@ -166,10 +222,33 @@ def profile_settings(request):
         })
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('home')
         else:
             context['form'] = form
             return render(request, 'user-profile.html', context)
+
+
+class ForgetPassword(generic.FormView):
+    template_name = 'user-forget-pass.html'
+    form_class = ForgetForm
+
+    def get_context_data(self, **kwargs):
+        context = get_context()
+        context['mail_valid'] = ForgetForm()
+
+        return context
+
+    def form_valid(self, form):
+        user = User.objects.filter(email=form.cleaned_data.get("email")).last()
+        if user:
+            token = Verification.objects.create(
+                user=user,
+                verification_type=0
+            )
+            password_verification.delay(user.email, token.get_verify_url())
+            return redirect("home")
+        else:
+            return messages.success("Please check your email address")
 
 
 @login_required
@@ -178,6 +257,10 @@ def social_settings(request):
     context['social_site'] = SocialSettings.objects.all()
     # print("-----------", SocialSettings.__getitem__)
     return render(request, 'setting-socials.html', context)
+
+
+class AuthLoginView(LoginView):
+    pass
 
 
 @login_required
@@ -210,7 +293,22 @@ def explore(request):
                     'like_count': shot.like_count,
                     'status': False
                 })
-    return render(request, 'explore-style3-cols3.html', context)
+        # if 'q' in request.GET:
+        #     query = request.GET.get('q')
+        #     explore = ShotDetails.objects.filter(
+        #         Q(tags__icontains=query) |
+        #         Q(location__icontains=query) |
+        #         Q(user__username__icontains=query) |
+        #         Q(user__first_name__icontains=query) |
+        #         Q(user__last_name__icontains=query)
+        #     )
+        page = Paginator(explore, 8)
+        context['explore'] = page.get_page(request.GET.get('page', 1))
+
+    if request.is_ajax():
+        return render(request, "explore.html", context)
+    else:
+        return render(request, 'explore-style3-cols3.html', context)
 
 
 def picture_add(request):
@@ -291,7 +389,6 @@ def into_shot(request, id):
 
 
 class FollowView(generic.View):
-    # template_name = 'user-followering.html'
 
     def post(self, request):
         user_id = request.POST.get('user_id')
@@ -300,7 +397,7 @@ class FollowView(generic.View):
             to_user_id=user_id
         ).last()
         if not follow:
-            follow = Follow.objects.create(
+            Follow.objects.create(
                 from_user=request.user,
                 to_user_id=user_id
             )
@@ -313,24 +410,29 @@ class FollowView(generic.View):
                 'status': False
             })
 
-    # def get_context_data(self, **kwargs):
-    #     context['following'] = [follow.to_user for follow in self.request.user.following.all()]
-    #     context['user_list'] = User.objects.all().exclude(id=self.request.user.id)
-    #     return context
-
-
 # class FollowingView(generic.TemplateView):
 #     template_name = 'user-followering.html'
 #
 #     def get_context_data(self, **kwargs):
+#         context = get_context()
 #         context['following'] = [follow.to_user for follow in self.request.user.following.all()]
 #         context['user_list'] = User.objects.all().exclude(id=self.request.user.id)
+#
 #         return context
 
 def FollowingView(request, id):
     context = get_context()
+    # user = User.objects.filter(id=id).last()
+    # context["user_list"] = User.objects.all().exclude(id=request.user.id)
+    # context["user"] = user
     user = User.objects.filter(id=id).last()
-    context["user_list"] = User.objects.all()
+    pagination = Paginator([follow.to_user for follow in user.following.all()], 6)
+    context["page_range"] = pagination.page_range
+    context["following"] = pagination.get_page(request.GET.get('page', 1))
+    context["followers"] = [follow.from_user for follow in user.followers.all()]
+    Follow.objects.filter(to_user=user)
+    context["follower_count"] = user.followers.all().count()
+    context["following_count"] = user.following.all().count()
     context["user"] = user
 
     return render(request, 'user-followering.html', context)
@@ -339,7 +441,7 @@ def FollowingView(request, id):
 def FollowersView(request, id):
     context = get_context()
     user = User.objects.filter(id=id).last()
-    context["user_list"] = User.objects.all()
+    # context["user_list"] = User.objects.all()
     context["user"] = user
 
     return render(request, 'user-followers.html', context)
@@ -377,14 +479,14 @@ def FollowersView(request, id):
 #                     "status": "False"
 #                 })
 #         return render(request, 'shot-gallery-for-modal.html', context)
-
-class ContactView(generic.TemplateView):
-    template_name = 'page-contact.html'
-
-    def get_context_data(self, **kwargs):
-        # context['']
-        context = get_context()
-        return context
+#
+# class ContactView(generic.TemplateView):
+#     template_name = 'page-contact.html'
+#
+#     def get_context_data(self, **kwargs):
+#         # context['']
+#         context = get_context()
+#         return context
 
 
 def ContactView(request):
@@ -406,3 +508,38 @@ def ContactView(request):
             # return HttpResponse('else')
 
     return render(request, 'page-contact.html', context)
+
+
+def search(request):
+    context = get_context()
+    context['user_list'] = User.objects.all().exclude(id=request.user.id)
+    # context['user_list'] = User.objects.all()
+    # if 'q' in request.GET:
+    #     query = request.GET.get('q')
+    #     context['explore'] = ShotDetails.objects.filter(
+    #         Q(tags__icontains=query) |
+    #         Q(location__icontains=query) |
+    #         Q(get_user_model=query) |
+    #         Q(user__username__icontains=query) |
+    #         Q(user__first_name__icontains=query) &
+    #         Q(user__last_name__icontains=query)
+    #     )
+
+    return render(request, 'page-search.html', context)
+
+
+# class search(generic.TemplateView):
+#     template_name = 'page-search.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = get_context()
+#         context['user_list'] = User.objects.all()
+#         return context
+
+
+# def forget(request):
+#     context = get_context()
+#     context['mail_valid'] = ForgetForm()
+#
+#
+#     return render(request, 'user-forget-pass.html', context)

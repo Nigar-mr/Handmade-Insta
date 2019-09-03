@@ -85,14 +85,14 @@
         <!-- Search screen -->
         <div class="search-screen closed">
             <button class="search-closer"><i class="ti-close"></i></button>
-            <form class="search-form" action="http://thetheme.io/theshots/page-search.html">
-                <input type="text" autocomplete="off" placeholder="Type to search...">
+            <form class="search-form">
+                <input type="text" name="q" value="{{ request.GET.q }}" autocomplete="off"
+                       placeholder="Type to search...">
             </form>
         </div>
         <!-- END Search screen -->
     </div>
     <div id="snackbar">Some text some message..</div>
-
 </nav>
 
 <!-- END Navigation bar -->
@@ -107,7 +107,7 @@
                 <ul class="link-list">
                     <li><a class="active" href="{% url 'profile-settings' %}">Profile</a></li>
                     <li><a href="{% url 'social-settings' %}">Social medias</a></li>
-                    <li><a href="setting-security.html">Security</a></li>
+                    <li><a href="{% url 'forget' %}">Security</a></li>
                 </ul>
             </div>
         </div>
@@ -252,6 +252,7 @@
 
     $(document).ready(function () {
         $(".follow-btn").click(function () {
+            alert("Ok")
             var form = new FormData();
             var button = $(this);
             form.append("user_id", $(this).attr("data-id"));
@@ -378,6 +379,33 @@
             }
         });
     });
+</script>
+<script>
+    var fetch_data = true;
+    var page = 2;
+    var last_page = {{ page_count }}
+        $(window).on("scroll", function () {
+            var scrollHeight = $(document).height();
+            var scrollPosition = $(window).height() + $(window).scrollTop();
+            if ((scrollHeight - scrollPosition) < 8) {
+                if (fetch_data) {
+                    fetch_data = false;
+                    $.ajax({
+                        url: "{% url 'explore' %}?page=" + page,
+                        method: "GET",
+                        success: function (data) {
+                            $(".main-data").append(data);
+                            page += 1;
+                            if (page > last_page) {
+                                fetch_data = false;
+                            } else {
+                                fetch_data = true
+                            }
+                        }
+                    })
+                }
+            }
+        });
 </script>
 </body>
 </html>

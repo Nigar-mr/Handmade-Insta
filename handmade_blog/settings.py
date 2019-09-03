@@ -48,9 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
     'django.contrib.humanize',
     'hm_blog.apps.HmBlogConfig',
 ]
+
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

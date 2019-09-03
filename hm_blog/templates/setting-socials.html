@@ -22,13 +22,18 @@
                             <form class="form-horizontal">
                                 {% for tables in social_site %}
                                     <div class="form-group">
-                                    <label class="col-sm-2 control-label">{{ tables.label }}</label>
-                                    <div class="col-sm-6">
-                                    <input type="text" class="form-control"
-                                    value="">
+                                        <label class="col-sm-2 control-label">{{ tables.label }}</label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control"
+                                                   value="">
                                         </div>
                                     </div>
                                 {% endfor %}
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save changes</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>

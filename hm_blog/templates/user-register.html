@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% block settings %}
+{% endblock %}
 {% block page %}
     {% load static %}
     <!-- Main container -->
     <main>
 
-        <section class="no-border-bottom section-sm" style="background-image: url('{% static 'img/register_bg.jpeg' %}')">
+        <section class="no-border-bottom section-sm"
+                 style="background-image: url('{% static 'img/register_bg.jpeg' %}')">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">

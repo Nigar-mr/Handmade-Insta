@@ -1,9 +1,11 @@
+import json
 from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, UserManager
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 import string
@@ -87,6 +89,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     location = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     email = models.EmailField(_('email address'), blank=True)
+    following_list = models.CharField(_('my following list'), max_length=255, null=True, blank=True)
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -136,6 +139,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
+    def get_following_list(self):
+        if self.following_list:
+            return json.loads(self.following_list)
+        else:
+            return []
+
+
 
 User = MyUser
 
@@ -147,12 +157,22 @@ def generate_token(size=120, chars=string.ascii_letters + string.digits):
 class Verification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=120, default=generate_token)
+    verification_type = models.IntegerField(
+        choices=(
+            (0, "Password"),
+            (1, "Email")
+        ), default=0
+    )
     expire = models.BooleanField(default=False)
 
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} {self.token}"
+
+    def get_verify_url(self):
+        return reverse("verify_passw", kwargs={"token": self.token,
+                                               "user_id": self.user_id})
 
 
 class ShotDetails(models.Model):
@@ -170,7 +190,6 @@ class ShotDetails(models.Model):
         ('BSD', 'BSD'),
         ('CCO', 'CCO'),
         ('Other', 'Other')
-
     )
     tags = models.TextField(null=True, blank=True)
     location = models.TextField(null=True, blank=True)

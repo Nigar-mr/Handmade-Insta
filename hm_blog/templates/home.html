@@ -17,15 +17,19 @@
 
             <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 header-form-wrapper">
                 <form class="header-form visible" method="post" enctype="multipart/form-data"
-                        {% if user.is_authenticated %} style="display: none;" {% endif %}
-                    >
+                        {% if user.is_authenticated %} style="display: none;" {% endif %}>
                     {% csrf_token %}
                     {% for form in login_form %}
                         <div class="form-group">
                             {{ form }}
+{#                        {% if form.errors %}#}
+{#                            {% for msg in field.errors %}#}
+{#                                <span class="text-danger">{{ msg }}</span>#}
+{#                            {% endfor %}#}
+{#                        {% endif %}#}
                         </div>
                     {% endfor %}
-                    <p><a href="user-forget-pass.html">Forgot your password?</a></p>
+                    <p><a href="{% url 'forget' %}">Forgot your password?</a></p>
 
                     <div class="row">
                         <div class="col-xs-6">

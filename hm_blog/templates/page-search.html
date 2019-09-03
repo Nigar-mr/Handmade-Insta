@@ -1,413 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block page %}
+    {% load common %}
+    {% block settings %}{% endblock %}
+    <!-- Main container -->
+    <main>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="theshots is a directory listing template.">
-    <meta name="keywords" content="">
+        <section class="no-border-bottom">
+            <div class="container">
+                <header class="section-header">
+                    <span>Search results for</span>
+                    <h2>Website</h2>
+                    <p>Showing 1-20 of results</p>
+                </header>
+                <div class="row">
 
-    <title>Insta Tech - Search result</title>
+                    <!-- Shot -->
+                    {% for user in user_list %}
+                        <div class="shot shot-small">
+                            <div class="shot-info">
+                                <a href="#"><img src="/static/img/avatar-1.jpg" alt="avatar"></a>
+                                <h6><a href="#">{{ user.username }}</a></h6>
+                                <p>
+                                    <a>{{ user.get_full_name }} </a>
+                                    <br>
+                                    <a href="#">{{ user.location|default:"" }}</a>
+                                    <button class="btn btn-sm btn-primary" style="float: right;"><i
+                                            class="fa fa-envelope"></i></button>
 
-    <!-- Styles -->
-    <link href="assets/css/app.min.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
+                                    {% if request.user in user|get_followers %}
+                                        <button class="btn btn-sm btn-success follow-btn" data-id="{{ user.id }}" style="float: right;"><i
+                                                class="fa fa-user-plus"></i></button>
+                                    {% else %}
+                                        <button class="btn btn-sm btn-success follow-btn" data-id="{{ user.id }}" style="float: right;"><i
+                                                class="fa fa-user-minus"></i></button>
+                                    {% endif %}
 
-    <!-- Fonts -->
-    <link href='https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700'
-          rel='stylesheet' type='text/css'>
-
-    <!-- Favicons -->
-    <link rel="icon" href="assets/img/favicon.ico">
-</head>
-
-<body class="sticky-nav">
-
-<!-- Navigation bar -->
-<nav class="navbar">
-    <div class="container">
-
-        <!-- Logo and navigation links -->
-        <div class="pull-left">
-            <a class="navbar-toggle" href="#" data-toggle="offcanvas"><i class="ti-menu"></i></a>
-
-            <div class="logo">
-                <a href="index.html"><img src="assets/img/logo.png" alt="logo"></a>
-            </div>
-
-            <ul class="nav-menu">
-                <li>
-                    <a href="index.html">Home</a>
-                    <ul>
-                        <li><a href="index.html">Version 1</a></li>
-                        <li><a href="index2.html">Version 2</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">Explore</a>
-                    <ul>
-                        <li><a href="explore-style1.html">Style 1</a></li>
-                        <li><a href="explore-style2.html">Style 2</a></li>
-                        <li><a href="explore-style3-cols4.html">Style 3 - Cols 4</a></li>
-                        <li><a href="explore-style3-cols3.html">Style 3 - Cols 3</a></li>
-                        <li><a href="explore-style3-cols2.html">Style 3 - Cols 2</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="active" href="#">Pages</a>
-                    <ul>
-                        <li><a href="shot-add.html">Add Shot</a></li>
-                        <li><a href="shot.html">Shot - Image</a></li>
-                        <li><a href="shot-gallery.html">Shot - Gallery</a></li>
-                        <li><a href="page-about.html">About</a></li>
-                        <li><a href="page-contact.html">Contact</a></li>
-                        <li><a href="page-faq.html">FAQ</a></li>
-                        <li><a class="active" href="page-search.html">Search</a></li>
-                        <li><a href="page-typography.html">Typography</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">User account</a>
-                    <ul>
-                        <li><a href="user-profile.html">Profile</a></li>
-                        <li><a href="user-followering.html">Followers - 1</a></li>
-                        <li><a href="user-followers.html">Followers - 2</a></li>
-                        <li><a href="setting-profile.html">Settings</a></li>
-                        <li><a href="user-login.html">Login</a></li>
-                        <li><a href="user-register.html">Register</a></li>
-                        <li><a href="user-forget-pass.html">Forget pass</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-        </div>
-        <!-- END Logo and navigation links -->
-
-        <!-- User account and action buttons -->
-        <div class="pull-right">
-            <a class="btn-navbar search-opener" href="#"><i class="ti-search"></i></a>
-            <a class="btn-navbar" href="shot-add.html"><i class="ti-plus"></i></a>
-
-            <div class="dropdown user-account">
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown">
-                    <img src="assets/img/avatar-2.jpg" alt="avatar">
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li><a href="user-profile.html">Profile</a></li>
-                    <li><a href="setting-profile.html">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            </div>
-
-        </div>
-        <!-- END User account and action buttons -->
-
-        <!-- Search screen -->
-        <div class="search-screen closed">
-            <button class="search-closer"><i class="ti-close"></i></button>
-            <form class="search-form" action="http://thetheme.io/theshots/page-search.html">
-                <input type="text" autocomplete="off" placeholder="Type to search...">
-            </form>
-        </div>
-        <!-- END Search screen -->
-
-    </div>
-</nav>
-<!-- END Navigation bar -->
-
-
-<!-- Main container -->
-<main>
-
-    <section class="no-border-bottom">
-        <div class="container">
-            <header class="section-header">
-                <span>Search results for</span>
-                <h2>Website</h2>
-                <p>Showing 1-20 of 158 results</p>
-            </header>
-
-            <div class="row">
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-3.jpg" alt=""></a>
-                            <span class="like liked"></span>
+                                    {#                                        {% if request.user in user|get_followers %}#}
+                                    {#                                            <a class="btn btn-success follow-btn" data-id="{{ user.id }}"#}
+                                    {#                                            >Unfollow</a>#}
+                                    {#                                        {% else %}#}
+                                    {#                                            <a class="btn btn-success follow-btn" data-id="{{ user.id }}"#}
+                                    {#                                            >Follow</a>#}
+                                    {#                                        {% endif %}#}
+                                </p>
+                            </div>
                         </div>
+                    {% endfor %}
 
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-1.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">20 mins ago</time>
-                                in <a href="page-search.html">Website</a></p>
-                        </div>
-                    </div>
+                    <!-- END Shot -->
                 </div>
-                <!-- END Shot -->
 
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-4.jpg" alt=""></a>
-                            <span class="like liked"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-2.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">56 mins ago</time>
-                                in <a href="page-search.html">App</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-7.jpg" alt=""></a>
-                            <span class="like"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-3.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">1 hours ago</time>
-                                in <a href="page-search.html">Event</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-5.jpg" alt=""></a>
-                            <span class="like"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-4.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">1 hours ago</time>
-                                in <a href="page-search.html">App</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-8.jpg" alt=""></a>
-                            <span class="like liked"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-5.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">1 hours ago</time>
-                                in <a href="page-search.html">Dashboard</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-6.jpg" alt=""></a>
-                            <span class="like"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-1.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">2 hours ago</time>
-                                in <a href="page-search.html">App</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-9.jpg" alt=""></a>
-                            <span class="like"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-3.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">2 hours ago</time>
-                                in <a href="page-search.html">User Interface</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-1.gif" alt=""></a>
-                            <span class="like liked"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-4.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">3 hours ago</time>
-                                in <a href="page-search.html">Animation</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
-
-                <!-- Shot -->
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="shot shot-small">
-                        <div class="shot-preview">
-                            <a class="img" href="shot-gallery.html"><img src="assets/img/shot-3.jpg" alt=""></a>
-                            <span class="like"></span>
-                        </div>
-
-                        <div class="shot-info">
-                            <a href="user-profile.html"><img src="assets/img/avatar-2.jpg" alt="avatar"></a>
-                            <h6><a href="shot-gallery.html">Donec vulputate justo</a></h6>
-                            <p>
-                                <time datetime="2016-02-04 22:30">3 hours ago</time>
-                                in <a href="page-search.html">Website</a></p>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Shot -->
             </div>
+        </section>
 
-        </div>
-    </section>
+    </main>
+    <!-- END Main container -->
 
-</main>
-<!-- END Main container -->
-
-
-<!-- Site footer -->
-<footer class="site-footer">
-
-    <!-- Top section -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-5">
-                <h6>About</h6>
-                <p class="text-justify"><strong>TheShots</strong> is a powerful, responsive, and high-performance image
-                    listing template. It's based on Bootstrap and contains a lot of components to easily make an image
-                    listing website. This template comes with a simple yet beautiful design which focused on ease of use
-                    for users. Take a tour in the website and check our intensive <a
-                            href="http://shamsoft.net/theshots/docs" target="_blank">online documentation</a> before
-                    make a purchuse!</p>
-            </div>
-
-            <div class="col-xs-12 col-sm-4 col-md-2">
-                <h6>Company</h6>
-                <ul class="footer-links">
-                    <li><a href="page-about.html">About us</a></li>
-                    <li><a href="page-typography.html">How it works</a></li>
-                    <li><a href="page-typography.html">Terms of use</a></li>
-                    <li><a href="page-typography.html">Privacy policy</a></li>
-                    <li><a href="page-contact.html">Contact us</a></li>
-                </ul>
-            </div>
-
-            <div class="col-xs-12 col-sm-4 col-md-2">
-                <h6>Support</h6>
-                <ul class="footer-links">
-                    <li><a href="page-faq.html">Help center</a></li>
-                    <li><a href="#">Tutorials</a></li>
-                    <li><a href="#">Forums</a></li>
-                    <li><a href="#">Official blog</a></li>
-                    <li><a href="#">Ask question</a></li>
-                </ul>
-            </div>
-
-            <div class="col-xs-12 col-sm-4 col-md-3">
-                <h6>Newsletter</h6>
-                <p><strong>Subscribe</strong> to our newsletter to receive news, updates, and special offers:</p>
-                <br>
-                <input type="text" class="form-control" placeholder="Enter your email address">
-                <button class="btn btn-primary btn-sm btn-block" type="button"><i class="fa fa-paper-plane"></i>
-                    Subscribe
-                </button>
-            </div>
-        </div>
-
-        <hr>
-    </div>
-    <!-- END Top section -->
-
-    <!-- Bottom section -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-sm-6 col-xs-12">
-                <p class="copyright-text">Copyrights &copy; 2016 All Rights Reserved by <a
-                        href="http://themeforest.net/user/shamsoft">ShaMSofT</a>.</p>
-            </div>
-
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <ul class="social-icons">
-                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                    <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- END Bottom section -->
-
-</footer>
-<!-- END Site footer -->
-
-
-<!-- Back to top button -->
-<a id="scroll-up" href="#"><i class="ti-angle-up"></i></a>
-<!-- END Back to top button -->
-
-
-<!-- Shot description modal -->
-<div id="shot-modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <a class="close-modal" data-dismiss="modal" href="#"><i class="ti-close"></i></a>
-        <div class="modal-content"></div>
-    </div>
-</div>
-<!-- END Shot description modal -->
-
-
-<!-- Scripts -->
-<script src="assets/js/app.min.js"></script>
-<script src="assets/js/custom.js"></script>
-
-
-</body>
-
-</html>
+{% endblock %}

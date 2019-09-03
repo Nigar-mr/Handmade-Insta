@@ -17,7 +17,7 @@ class MyUserAdmin(UserAdmin):
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': (
             'first_name', 'last_name', 'email',
-            'profile_image')}),
+            'profile_image', 'headline', 'location', 'description')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
@@ -31,7 +31,7 @@ class MyUserAdmin(UserAdmin):
     # The forms to add and change user instances
     form = MyUserChangeForm
     add_form = MyUserCreationForm
-    list_display = ('username', 'first_name', 'last_name', 'is_staff', 'profile_image')
+    list_display = ('username', 'first_name', 'last_name', 'is_active', 'profile_image')
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('first_name', 'last_name', 'username', 'email')
     ordering = ('-date_joined',)
