@@ -102,8 +102,8 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'handmade_insta_db',
-            'USER': 'handmade_insta_user',
+            'NAME': 'insta_db',
+            'USER': 'insta_db_user',
             'PASSWORD': 'mnr123987',
             'HOST': 'localhost',
         }
