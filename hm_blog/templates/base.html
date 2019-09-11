@@ -65,7 +65,7 @@
         {% if user.is_authenticated %}
             <!-- User account and action buttons -->
             <div class="pull-right">
-                <a class="btn-navbar search-opener" href="#"><i class="ti-search"></i></a>
+                <a class="btn-navbar search-opener" id="search" href="#"><i class="ti-search"></i></a>
                 <a class="btn-navbar" href="{% url 'add' %}"><i class="ti-plus"></i></a>
 
                 <div class="dropdown user-account">
@@ -406,6 +406,13 @@
                 }
             }
         });
+</script>
+<script>
+$(document).ready(function(){
+    $('#search').keydown(function(e){
+        location.href = "{% url 'search' %}"
+    })
+})
 </script>
 </body>
 </html>
