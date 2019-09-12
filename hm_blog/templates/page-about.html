@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block settings %}{% endblock %}
 {% block page %}
     {% block settings %}
         {% endblock %}
@@ -32,28 +33,29 @@
                 <div class="row equal-blocks">
 
                     <!-- User widget -->
-                    <div class="col-xs-12 col-sm-6 col-md-4">
-                        <div class="card user-widget">
-                            <div class="card-block text-center">
-                                {% for team in team %}
-                                    <img src="{{ team.avatar }}" alt="avatar">
+                    {% for team in team %}
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="card user-widget">
+                                <div class="card-block text-center">
+                                    <img src="{{ team.avatar.url }}" alt="avatar">
                                     <h5><a href="#">{{ team.name }}</a></h5>
                                     <p class="lead">{{ team.job }}</p>
                                     <br>
                                     <p class="text-justify">{{ team.person_story }}</p>
-                                {% endfor %}
-                            </div>
+                                </div>
 
-                            <div class="card-footer">
-                                <ul class="social-icons">
-                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
-                                    <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
+                                <div class="card-footer">
+                                    <ul class="social-icons">
+                                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                                        <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
+
                     <!-- END User widget -->
 
                     {#                <!-- User widget -->#}

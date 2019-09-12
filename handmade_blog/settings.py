@@ -25,7 +25,7 @@ SECRET_KEY = 'w&2wxk&ei5r5c$57vx%052g!3b2l1=95d&i%hggj^3nx&c04w4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = 'hm_blog.MyUser'  #MyUser--modelin adi
 
@@ -48,9 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'celery',
+    'django_celery_results',
+    'django_celery_beat',
     'django.contrib.humanize',
     'hm_blog.apps.HmBlogConfig',
 ]
+
+LOGIN_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,12 +91,23 @@ WSGI_APPLICATION = 'handmade_blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'insta_db',
+            'USER': 'insta_db_user',
+            'PASSWORD': 'mnr123987',
+            'HOST': 'localhost',
+        }
+    }
 
 
 # Password validation

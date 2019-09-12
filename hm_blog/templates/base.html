@@ -65,7 +65,7 @@
         {% if user.is_authenticated %}
             <!-- User account and action buttons -->
             <div class="pull-right">
-                <a class="btn-navbar search-opener" href="#"><i class="ti-search"></i></a>
+                <a class="btn-navbar search-opener" id="search" href="#"><i class="ti-search"></i></a>
                 <a class="btn-navbar" href="{% url 'add' %}"><i class="ti-plus"></i></a>
 
                 <div class="dropdown user-account">
@@ -93,7 +93,6 @@
         <!-- END Search screen -->
     </div>
     <div id="snackbar">Some text some message..</div>
-
 </nav>
 
 <!-- END Navigation bar -->
@@ -108,7 +107,7 @@
                 <ul class="link-list">
                     <li><a class="active" href="{% url 'profile-settings' %}">Profile</a></li>
                     <li><a href="{% url 'social-settings' %}">Social medias</a></li>
-                    <li><a href="setting-security.html">Security</a></li>
+                    <li><a href="{% url 'forget' %}">Security</a></li>
                 </ul>
             </div>
         </div>
@@ -254,6 +253,7 @@
 
     $(document).ready(function () {
         $(".follow-btn").click(function () {
+            alert("Ok")
             var form = new FormData();
             var button = $(this);
             form.append("user_id", $(this).attr("data-id"));
@@ -381,6 +381,42 @@
         });
     });
 </script>
+<<<<<<< HEAD
+<script>
+    var fetch_data = true;
+    var page = 2;
+    var last_page = {{ page_count }}
+        $(window).on("scroll", function () {
+            var scrollHeight = $(document).height();
+            var scrollPosition = $(window).height() + $(window).scrollTop();
+            if ((scrollHeight - scrollPosition) < 8) {
+                if (fetch_data) {
+                    fetch_data = false;
+                    $.ajax({
+                        url: "{% url 'explore' %}?page=" + page,
+                        method: "GET",
+                        success: function (data) {
+                            $(".main-data").append(data);
+                            page += 1;
+                            if (page > last_page) {
+                                fetch_data = false;
+                            } else {
+                                fetch_data = true
+                            }
+                        }
+                    })
+                }
+            }
+        });
+</script>
+<script>
+$(document).ready(function(){
+    $('#search').keydown(function(e){
+        location.href = "{% url 'search' %}"
+    })
+})
+</script>
+=======
 {#<script>#}
 {#        var fetch_data = true;#}
 {#        var page = 2;#}
@@ -411,5 +447,6 @@
 {#    </script>#}
 {% block js %}
 {% endblock %}
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
 </body>
 </html>

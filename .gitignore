@@ -2,9 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.idea/
 # C extensions
 *.so
+ .idea/workspace.xml
 
 # Distribution / packaging
 .Python
@@ -24,6 +25,8 @@ wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+.idea
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -46,7 +49,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
-
+.idea/workspace.xml
 # Translations
 *.mo
 *.pot
