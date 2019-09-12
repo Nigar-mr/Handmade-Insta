@@ -42,7 +42,7 @@
             </div>
 
             <ul class="nav-menu">
-                {% for menu in menu %}
+                {% for menu in menu_list %}
                     <li>
                         {% if user.is_authenticated %}
                             <a class="active" href="{{ menu.url }}">{{ menu.name }}</a>
@@ -410,11 +410,11 @@
         });
 </script>
 <script>
-$(document).ready(function(){
-    $('#search').keydown(function(e){
-        location.href = "{% url 'search' %}"
+    $(document).ready(function () {
+        $('#search').keydown(function (e) {
+            location.href = "{% url 'search' %}"
+        })
     })
-})
 </script>
 =======
 {#<script>#}
