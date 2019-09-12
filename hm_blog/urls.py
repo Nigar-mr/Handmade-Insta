@@ -3,11 +3,7 @@ from django.urls import path, include
 from .views import home, register, verify_view, profile, logout_page, \
     add_shot, profile_settings, social_settings, explore, picture_add, \
     picture_delete, about, into_shot, FollowView, FollowingView, \
-<<<<<<< HEAD
-    FollowersView, ContactView, search, verify_passw, ForgetPassword
-=======
-    FollowersView, ContactView, search
->>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
+    FollowersView, ContactView, search, verify_passw
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -31,11 +27,6 @@ urlpatterns = [
     path('<int:id>/followers/', FollowersView, name='followers'),
     path('comment/', into_shot, name='comment'),
     path('contact/', ContactView, name='contact'),
-<<<<<<< HEAD
-    path('search/', search, name='search'),
-    path('forget/', ForgetPassword.as_view(), name='forget')
-=======
     path('search/', search, name='search')
->>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
 
 ]
