@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b16e071-ebf5-4ec0-971f-2b19171b9ca5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="3b16e071-ebf5-4ec0-971f-2b19171b9ca5" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,8 +102,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="30" column="13" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="13" />
+            <state relative-caret-position="456">
+              <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -246,6 +243,16 @@
               <item name="Handmade-Insta" type="b2602c69:ProjectViewProjectNode" />
               <item name="Handmade-Insta" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Handmade-Insta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Handmade-Insta" type="462c0819:PsiDirectoryNode" />
+              <item name="handmade_blog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Handmade-Insta" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Handmade-Insta" type="462c0819:PsiDirectoryNode" />
+              <item name="hm_blog" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -341,12 +348,12 @@
       <workItem from="1568215033215" duration="5051000" />
       <workItem from="1568285991251" duration="243000" />
       <workItem from="1568300425114" duration="266000" />
-      <workItem from="1568300780466" duration="289000" />
+      <workItem from="1568300780466" duration="542000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="249007000" />
+    <option name="totallyTimeSpent" value="249260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -815,8 +822,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="2" selection-end-line="30" selection-end-column="13" />
+        <state relative-caret-position="456">
+          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
         </state>
       </provider>
     </entry>
