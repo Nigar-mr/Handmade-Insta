@@ -7,12 +7,14 @@ from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from hm_blog.models import Menu, Unique, Footer, FooterIcons, RowMenu, Verification, SocialSettings, \
-    AddImages, ShotDetails, About, AboutTeam, Like, Follow, Comment, ContactUs
+    AddImages, ShotDetails, About, AboutTeam, Like, Follow, Comment, ContactUs, MyUser
 from hm_blog.forms import RegisterForm, LoginForm, ShotDetailForm, SettingProfileForm, CommentForm, \
     ContactForm, ForgetForm, PasswordChangeForm
 import uuid
 from django.views import generic
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+
 
 # Create your views here.
 from hm_blog.task import password_verification
@@ -165,9 +167,13 @@ def profile(request, id):
     user = User.objects.filter(id=id).last()
     context['profile'] = SettingProfileForm()
     context["profile_user"] = user
+<<<<<<< HEAD
     # context['shot_detail_model'] = ShotDetails.objects.filter(user=user)
     # return render(request, 'user-profile.html', context)
     page = Paginator(ShotDetails.objects.filter(user=user), 8)
+=======
+    page = Paginator(ShotDetails.objects.filter(user=user), 12)
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
     context['shot_detail_model'] = page.get_page(request.GET.get('page', 1))
     context['page_count'] = page.num_pages
     if request.is_ajax():
@@ -266,7 +272,9 @@ class AuthLoginView(LoginView):
 @login_required
 def explore(request):
     context = get_context()
-    context['explore'] = ShotDetails.objects.all()
+    page = Paginator(ShotDetails.objects.all(), 8)
+    context['explore'] = page.get_page(request.GET.get('page', 1))
+    context['page_count'] = page.num_pages
     if request.method == "POST" and request.is_ajax():
         shot_id = request.POST.get('shot_id')
         shot = ShotDetails.objects.filter(id=shot_id).last()
@@ -293,6 +301,7 @@ def explore(request):
                     'like_count': shot.like_count,
                     'status': False
                 })
+<<<<<<< HEAD
         # if 'q' in request.GET:
         #     query = request.GET.get('q')
         #     explore = ShotDetails.objects.filter(
@@ -302,6 +311,17 @@ def explore(request):
         #         Q(user__first_name__icontains=query) |
         #         Q(user__last_name__icontains=query)
         #     )
+=======
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        explore = ShotDetails.objects.filter(
+            Q(tags__icontains=query) |
+            Q(location__icontains=query) |
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
         page = Paginator(explore, 8)
         context['explore'] = page.get_page(request.GET.get('page', 1))
 
@@ -512,6 +532,7 @@ def ContactView(request):
 
 def search(request):
     context = get_context()
+<<<<<<< HEAD
     context['user_list'] = User.objects.all().exclude(id=request.user.id)
     # context['user_list'] = User.objects.all()
     # if 'q' in request.GET:
@@ -543,3 +564,18 @@ def search(request):
 #
 #
 #     return render(request, 'user-forget-pass.html', context)
+=======
+    if 'q' in request.GET:
+        query = request.GET.get('q')
+        context['explore'] = ShotDetails.objects.filter(
+            Q(tags__icontains=query) |
+            Q(location__icontains=query) |
+            Q(get_user_model=query) |
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) &
+            Q(user__last_name__icontains=query)
+        )
+
+
+    return render(request, 'page-search.html', context)
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350

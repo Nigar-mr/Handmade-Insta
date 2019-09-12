@@ -3,7 +3,11 @@ from django.urls import path, include
 from .views import home, register, verify_view, profile, logout_page, \
     add_shot, profile_settings, social_settings, explore, picture_add, \
     picture_delete, about, into_shot, FollowView, FollowingView, \
+<<<<<<< HEAD
     FollowersView, ContactView, search, verify_passw, ForgetPassword
+=======
+    FollowersView, ContactView, search
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -13,6 +17,7 @@ urlpatterns = [
     path('verify/<str:token>/<int:user_id>/', verify_view, name='verify_view'),
     path('verify_passw/<str:token>/<int:user_id>/', verify_passw.as_view(), name='verify_passw'),
     path('profile/<int:id>/', profile, name='profile'),
+    path('profile/', profile, name='profile'),
     path('upload/image', picture_add, name='picture-add'),
     path('delete/image', picture_delete, name="picture-delete"),
     path('logout/', logout_page, name="logout"),
@@ -26,7 +31,11 @@ urlpatterns = [
     path('<int:id>/followers/', FollowersView, name='followers'),
     path('comment/', into_shot, name='comment'),
     path('contact/', ContactView, name='contact'),
+<<<<<<< HEAD
     path('search/', search, name='search'),
     path('forget/', ForgetPassword.as_view(), name='forget')
+=======
+    path('search/', search, name='search')
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
 
 ]

@@ -31,12 +31,17 @@
                             <li class="active"><a
                                     href="#"><i>Shots</i><span>{{ profile_user.shotdetails_set.all.count }}</span></a>
                             </li>
+<<<<<<< HEAD
                             <li>
                                 <a href="{% url 'followers' user.id %}"><i>Followers</i><span>{{ shot.user.followers.all.count }}</span></a>
                             </li>
                             <li>
                                 <a href="{% url 'following' user.id %}"><i>Following</i><span>{{ shot.user.following.all.count }}</span></a>
                             </li>
+=======
+                            <li><a href="{% url 'followers' user.id %}"><i>Followers</i><span>{{ profile_user.followers.all.count }}</span></a></li>
+                            <li><a href="{% url 'following' user.id %}"><i>Following</i><span>{{ profile_user.following.all.count }}</span></a></li>
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
                         </ul>
                     </div>
                 </div>
@@ -44,7 +49,11 @@
             <!-- END Profile head -->
         {% endblock %}
         <!-- User shots -->
+<<<<<<< HEAD
         <section class="no-border-bottom section-sm main-data">
+=======
+        <section class="no-border-bottom section-sm main-profile-data">
+>>>>>>> 58cfc7553e03fd1def6d7604251b97ecf9c02350
             <div class="container">
                 <div class="row">
                     <!-- Shot -->
@@ -123,5 +132,35 @@
                 })
             })
         })
+    </script>
+{% endblock %}
+{% block js %}
+    <script>
+        var fetch_data = true;
+        var page = 2;
+        var last_page = {{ page_count }}
+            $(window).on("scroll", function () {
+                var scrollHeight = $(document).height();
+                var scrollPosition = $(window).height() + $(window).scrollTop();
+                if ((scrollHeight - scrollPosition) < 8) {
+                    if (fetch_data) {
+                        fetch_data = false;
+                        $.ajax({
+                            url: "{% url 'profile' %}?page=" + page,
+                            method: "GET",
+                            success: function (data) {
+                                $(".main-profile-data").append(data);
+                                page += 1;
+                                if (page > last_page) {
+                                    fetch_data = false;
+                                }
+                                else {
+                                    fetch_data = true
+                                }
+                            }
+                        })
+                    }
+                }
+            });
     </script>
 {% endblock %}
