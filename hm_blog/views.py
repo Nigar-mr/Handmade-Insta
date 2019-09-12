@@ -24,7 +24,7 @@ User = get_user_model()
 
 def get_context():
     context = {}
-    context['menu'] = Menu.objects.all()
+    context['menu_list'] = Menu.objects.all()
     context['row_menu'] = RowMenu.objects.all()
     context['unique'] = Unique.objects.last()
     context['footer'] = Footer.objects.all()
@@ -42,7 +42,7 @@ def get_context():
 
 def home(request):
     context = get_context()
-    context['menu'] = Menu.objects.all()
+    context['menu_list'] = Menu.objects.all()
     context['row_menu'] = RowMenu.objects.all()
     context['unique'] = Unique.objects.last()
     context['footer'] = Footer.objects.all()
